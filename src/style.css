@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Crete+Round&family=Poppins&family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(250, 244, 244);
+}
+
+.to-do-box {
+  width: 40%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.todays-to-do {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-to-list {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-to-list input {
+  font-style: italic;
+  width: 80%;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.btn-clear {
+  display: block;
+  margin-top: auto;
+  border: 1px solid #ccc;
+  padding: 15px 0;
+  color: rgb(138, 133, 133);
+  font-size: 1rem;
+}
+
+.btn-add-task {
+  background: none;
+  border: none;
+  width: 30px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.to-do-list {
+  list-style-type: none;
+}
+
+.to-do-list li {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
