@@ -20,9 +20,7 @@ const toDoList = [
 ];
 
 const showListItems = () => {
-  toDoList.sort((a, b) => {
-    return a.index - b.index;
-  });
+  toDoList.sort((a, b) => a.index - b.index);
   toDoList.forEach((item) => {
     const listItem = `
     <li>
