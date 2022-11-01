@@ -8,23 +8,26 @@ const toDoList = [
     description: 'wash the dishes',
   },
   {
-    index: 1,
+    index: 2,
     completed: 'true',
     description: 'cook food',
   },
   {
-    index: 2,
+    index: 1,
     completed: 'true',
     description: 'complete project',
   },
 ];
 
 const showListItems = () => {
+  toDoList.sort((a, b) => {
+    return a.index - b.index;
+  });
   toDoList.forEach((item) => {
     const listItem = `
     <li>
       <div class="check">
-        <input type="checkbox" name="${item.index}" id="${item.index}">
+        <input type="checkbox" name="${item.index}" id=${item.index}>
         <p>${item.description}</p>
       </div>
       <i class="fa-solid fa-ellipsis-vertical"></i>
