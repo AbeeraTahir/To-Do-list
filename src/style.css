@@ -79,7 +79,14 @@ button {
   justify-content: space-between;
 }
 
-.check {
+.task-description {
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.check,
+.actions {
   display: flex;
   align-items: center;
   gap: 15px;
