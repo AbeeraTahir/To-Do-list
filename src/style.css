@@ -58,9 +58,7 @@ body {
 }
 
 .btn-add-task {
-  background: none;
   border: none;
-  width: 30px;
 }
 
 button {
@@ -90,4 +88,9 @@ button {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.edit,
+.del {
+  cursor: pointer;
 }

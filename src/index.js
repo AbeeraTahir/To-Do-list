@@ -2,6 +2,8 @@ import './style.css';
 
 const form = document.getElementById('add-to-list');
 const listItems = document.getElementById('to-do-list');
+
+// array for storing objects of to-do tasks
 const taskArr = [];
 
 // function for display added task to list
@@ -10,10 +12,10 @@ const displayTask = (task) => {
   <li>
     <div class="check">
       <input type="checkbox" name="${task.description}">
-      <input type="text" class="task-description" name="${task.description}" class="task-name" value="${task.description}">
+      <input type="text" class="task-description" name="${task.description}" class="task-name" id="task-name" value="${task.description}">
     </div>
     <div class="actions">
-      <i class="fa-solid fa-pen-to-square"></i>
+      <i class="fa-solid fa-pen-to-square edit"></i>
       <i class="fa-solid fa-trash-can del"></i>
     </div>
   </li>`;
@@ -50,10 +52,27 @@ const deleteTask = (task, element) => {
   element.parentElement.parentElement.remove();
 };
 
-// Element target for task deletion
+// editing task
+// task will be edited when first the input field of task is updated and then edit icon is clicked
+const editTask = (task) => {
+  const taskItem = task.children[0].children[1].name;
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const taskIndex = tasks.findIndex((x) => x.description === taskItem);
+  const taskName = task.querySelector('#task-name').value;
+  tasks[taskIndex].description = taskName;
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+// Element target for task deletion and updation
 listItems.addEventListener('click', (e) => {
   const task = e.target.parentElement.parentElement;
-  deleteTask(task, e.target);
+  if (e.target.classList.contains('del')) {
+    deleteTask(task, e.target);
+  }
+  // task will be edited when first the input field of task is updated and then edit icon is clicked
+  if (e.target.classList.contains('edit')) {
+    editTask(task);
+  }
 });
 
 form.addEventListener('submit', (e) => {
