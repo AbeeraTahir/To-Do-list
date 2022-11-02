@@ -9,13 +9,13 @@
 <body>
     <div class="to-do-box">
         <div class="todays-to-do"><p>Today's To Do</p><i class="fa-solid fa-arrows-rotate"></i></div>
-        <form class="add-to-list">
+        <form class="add-to-list" id="add-to-list">
             <input type="text" name="task" id="task" placeholder="Add to list..." required>
             <button type="submit" class="btn-add-task">
-                <i class="fa-solid fa-arrow-turn-down-left"></i>
+                <i class="fa-solid fa-plus"></i>
             </button>
         </form>
-        <ul class="to-do-list">
+        <ul id="to-do-list" class="to-do-list">
         </ul>
         <button class="btn-clear">Clear all completed</button>
     </div>
