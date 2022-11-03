@@ -1,4 +1,5 @@
 import './style.css';
+import updateTaskStatus from './task_status_update.js';
 
 const form = document.getElementById('add-to-list');
 const listItems = document.getElementById('to-do-list');
@@ -6,12 +7,15 @@ const listItems = document.getElementById('to-do-list');
 // array for storing objects of to-do tasks
 const taskArr = [];
 
+// getting to-do tasks from local storage
+const tasks = JSON.parse(localStorage.getItem('tasks'));
+
 // function for display added task to list
 const displayTask = (task) => {
   const listItem = `
   <li>
     <div class="check">
-      <input type="checkbox" name="${task.description}">
+      <input type="checkbox" name="checkbox" class="checkbox" id="${task.description}">
       <input type="text" class="task-description" name="${task.description}" class="task-name" id="task-name" value="${task.description}">
     </div>
     <div class="actions">
@@ -24,7 +28,6 @@ const displayTask = (task) => {
 
 // displaying tasks on window loading
 window.addEventListener('DOMContentLoaded', () => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
   tasks.forEach((task) => displayTask(task));
 });
 
@@ -42,7 +45,6 @@ const addTask = (task) => {
 // deleting task
 const deleteTask = (task, element) => {
   const taskName = task.children[0].children[1].value;
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
   const taskIndex = tasks.findIndex((x) => x.description === taskName);
   tasks.splice(taskIndex, 1);
   tasks.forEach((item, ind) => {
@@ -56,7 +58,6 @@ const deleteTask = (task, element) => {
 // task will be edited when first the input field of task is updated and then edit icon is clicked
 const editTask = (task) => {
   const taskItem = task.children[0].children[1].name;
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
   const taskIndex = tasks.findIndex((x) => x.description === taskItem);
   const taskName = task.querySelector('#task-name').value;
   tasks[taskIndex].description = taskName;
@@ -72,6 +73,9 @@ listItems.addEventListener('click', (e) => {
   // task will be edited when first the input field of task is updated and then edit icon is clicked
   if (e.target.classList.contains('edit')) {
     editTask(task);
+  }
+  if (e.target.classList.contains('checkbox')) {
+    updateTaskStatus(e.target, tasks);
   }
 });
 
