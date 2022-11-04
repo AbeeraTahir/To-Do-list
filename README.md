@@ -6,6 +6,9 @@ This repository contains the project used to keep track of daily/weekly activiti
 - CSS
 - JavaScript
 
+## Live Demo
+> [Click here for live preview](https://abeeratahir.github.io/To-Do-list/dist/)
+
 ## Getting Started
 
 > To clone the project select the desired directory in cmd and run: `git clone https://github.com/AbeeraTahir/To-Do-list.git`
