@@ -2,19 +2,26 @@ import './style.css';
 import updateTaskStatus from './task_status_update.js';
 
 // getting elements
-const form = document.getElementById('add-to-list');
+const inputTask = document.getElementById('task');
 const listItems = document.getElementById('to-do-list');
 const btnClear = document.querySelector('.btn-clear');
 
-// array for storing objects of to-do tasks
-const taskArr = [];
+// function to set task to local storage
+const setLocalStorage = (tasks) => {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+// function to get task from local storage
+const getLocalStorage = () => {
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  return tasks;
+};
 
 // function for display added task to list
-const displayTask = (task) => {
-  const listItem = `
-  <li>
+const addTaskUI = (task) => {
+  const listItem = `<li>
     <div class="check">
-      <input type="checkbox" name="checkbox" class="checkbox" id="${task.description}">
+      <input type="checkbox" name="checkbox" class="checkbox" id="${task.description}" ${task.completed ? 'checked' : ''}>
       <input type="text" class="task-description" name="${task.description}" class="task-name" id="task-name" value="${task.description}">
     </div>
     <div class="actions">
@@ -22,61 +29,42 @@ const displayTask = (task) => {
       <i class="fa-solid fa-trash-can del"></i>
     </div>
   </li>`;
-  return listItem;
-};
-
-window.addEventListener('DOMContentLoaded', () => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
-  // displaying tasks on window loading
-  tasks.forEach((task) => {
-    const listItem = displayTask(task);
-    listItems.insertAdjacentHTML('beforeend', listItem);
-  });
-  // setting checkbox value to checked on window refresh if status is completed
-  const completedTasksIndex = tasks.filter((task) => task.completed === true);
-  for (let i = 0; i < completedTasksIndex.length; i += 1) {
-    for (let j = 0; j < (listItems.children).length; j += 1) {
-      if (j === (completedTasksIndex[i].index - 1)) {
-        listItems.children[j].children[0].children[0].checked = true;
-      }
-    }
-  }
-});
-
-// function for adding task to list
-const addTask = (task) => {
-  const taskObj = {};
-  taskObj.index = taskArr.length + 1;
-  taskObj.description = task;
-  taskObj.completed = false;
-  const listItem = displayTask(taskObj);
   listItems.insertAdjacentHTML('beforeend', listItem);
-  taskArr.push(taskObj);
-  localStorage.setItem('tasks', JSON.stringify(taskArr));
 };
+
+// function to render all tasks
+const renderTasks = () => {
+  const tasks = getLocalStorage();
+  tasks.map((task) => addTaskUI(task));
+};
+
+// displaying tasks on window loading
+window.addEventListener('DOMContentLoaded', () => {
+  renderTasks();
+});
 
 // deleting task
 const deleteTask = (task, element) => {
+  const tasks = getLocalStorage();
   const taskName = task.children[0].children[1].value;
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
   const taskIndex = tasks.findIndex((x) => x.description === taskName);
   tasks.splice(taskIndex, 1);
   tasks.forEach((item, ind) => {
     item.index = ind + 1;
   });
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+  setLocalStorage(tasks);
   element.parentElement.parentElement.remove();
 };
 
 // editing task
 // task will be edited when first the input field of task is updated and then edit icon is clicked
 const editTask = (task) => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const tasks = getLocalStorage();
   const taskItem = task.children[0].children[1].name;
   const taskIndex = tasks.findIndex((x) => x.description === taskItem);
   const taskName = task.querySelector('#task-name').value;
   tasks[taskIndex].description = taskName;
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+  setLocalStorage(tasks);
 };
 
 // Element target for task deletion and updation
@@ -90,29 +78,34 @@ listItems.addEventListener('click', (e) => {
     editTask(task);
   }
   if (e.target.classList.contains('checkbox')) {
-    const tasks = JSON.parse(localStorage.getItem('tasks'));
+    const tasks = getLocalStorage();
     updateTaskStatus(e.target, tasks);
   }
 });
 
 // clearing the completed tasks from list
 btnClear.addEventListener('click', () => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const tasks = getLocalStorage();
   const filterTasks = tasks.filter((task) => task.completed === false);
   filterTasks.forEach((item, ind) => {
     item.index = ind + 1;
   });
-  let updatedList = '';
-  filterTasks.forEach((task) => {
-    updatedList += displayTask(task);
-  });
-  listItems.innerHTML = updatedList;
-  localStorage.setItem('tasks', JSON.stringify(filterTasks));
+  setLocalStorage(filterTasks);
+  listItems.innerHTML = '';
+  renderTasks();
 });
 
-form.addEventListener('submit', (e) => {
+inputTask.addEventListener('keypress', (e) => {
   e.preventDefault();
-  const task = document.getElementById('task');
-  addTask(task.value);
-  task.value = '';
+  const tasks = getLocalStorage();
+  if (e.key === 'Enter' && inputTask.value.trim() !== '') {
+    tasks.push({
+      index: tasks.length + 1,
+      description: inputTask.value,
+      completed: false,
+    });
+    setLocalStorage(tasks);
+    addTaskUI(tasks[tasks.length - 1]);
+    inputTask.value = '';
+  }
 });
