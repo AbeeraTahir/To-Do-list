@@ -1,28 +1,18 @@
 import './style.css';
-import updateTaskStatus from './task_status_update.js';
+import updateTaskStatus from './modules/task_status_update.js';
+import { setLocalStorage, getLocalStorage } from './modules/local_storage.js';
 
 // getting elements
 const inputTask = document.getElementById('task');
 const listItems = document.getElementById('to-do-list');
 const btnClear = document.querySelector('.btn-clear');
 
-// function to set task to local storage
-const setLocalStorage = (tasks) => {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-};
-
-// function to get task from local storage
-const getLocalStorage = () => {
-  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  return tasks;
-};
-
 // function for display added task to list
 const addTaskUI = (task) => {
   const listItem = `<li>
     <div class="check">
       <input type="checkbox" name="checkbox" class="checkbox" id="${task.description}" ${task.completed ? 'checked' : ''}>
-      <input type="text" class="task-description" name="${task.description}" class="task-name" id="task-name" value="${task.description}">
+      <input type="text" class="task-description" name="${task.description}" id="task-name" value="${task.description}">
     </div>
     <div class="actions">
       <i class="fa-solid fa-pen-to-square edit"></i>
