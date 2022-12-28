@@ -83,6 +83,10 @@ button {
   font-size: 0.9rem;
 }
 
+.task-description:focus {
+  border: 1px solid black;
+}
+
 .check,
 .actions {
   display: flex;
