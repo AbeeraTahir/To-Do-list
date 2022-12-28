@@ -24,7 +24,7 @@ const addTask = (task) => {
 // function to render all tasks
 const renderTasks = () => {
   const tasks = getLocalStorage();
-  tasks.map((task) => addTaskUI(task));
+  tasks.map((task) => addTask(task));
 };
 
 // displaying tasks on window loading
