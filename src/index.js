@@ -11,7 +11,7 @@ const btnClear = document.querySelector('.btn-clear');
 const addTask = (task) => {
   const listItem = `<li>
     <div class="check">
-      <input type="checkbox" name="checkbox" class="checkbox" id="check-${task.index}" ${task.completed ? 'checked' : ''}>
+      <input type="checkbox" class="checkbox" id="check-${task.index}" ${task.completed ? 'checked' : ''}>
       <input type="text" class="task-description" id="task-${task.index}" value="${task.description}">
     </div>
     <div class="actions">
@@ -21,27 +21,22 @@ const addTask = (task) => {
   listItems.insertAdjacentHTML('beforeend', listItem);
 };
 
-// function to render all tasks
-const renderTasks = () => {
-  const tasks = getLocalStorage();
-  tasks.map((task) => addTask(task));
-};
-
 // displaying tasks on window loading
 window.addEventListener('DOMContentLoaded', () => {
-  renderTasks();
+  const tasks = getLocalStorage();
+  tasks.map((task) => addTask(task));
 });
 
 // deleting task
-const deleteTask = (taskItem, element) => {
+const deleteTask = (element) => {
   const tasks = getLocalStorage();
-  const task = tasks.findIndex((todo) => todo.index === parseInt(element.id.replace('del-', ''), 10));
-  tasks.splice(task, 1);
-  tasks.forEach((item, index) => {
+  const filteredTasks = tasks.filter((todo) => todo.index !== parseInt(element.id.replace('del-', ''), 10));
+  filteredTasks.forEach((item, index) => {
     item.index = index + 1;
   });
-  setLocalStorage(tasks);
-  taskItem.remove();
+  setLocalStorage(filteredTasks);
+  element.parentElement.parentElement.remove();
+  window.location.reload();
 };
 
 // editing task
@@ -62,9 +57,8 @@ const editTask = () => {
 
 // Element target for task deletion and status updation
 listItems.addEventListener('click', (e) => {
-  const task = e.target.parentElement.parentElement;
   if (e.target.classList.contains('del')) {
-    deleteTask(task, e.target);
+    deleteTask(e.target);
   }
   if (e.target.classList.contains('checkbox')) {
     const tasks = getLocalStorage();
@@ -85,8 +79,7 @@ btnClear.addEventListener('click', () => {
     item.index = ind + 1;
   });
   setLocalStorage(filterTasks);
-  listItems.innerHTML = '';
-  renderTasks();
+  window.location.reload();
 });
 
 inputTask.addEventListener('keypress', (e) => {
