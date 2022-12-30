@@ -38,14 +38,19 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .add-to-list input {
   font-style: italic;
   width: 80%;
-  border: none;
   outline: none;
   font-size: 0.95rem;
+  border: none;
+}
+
+.add-to-list span {
+  font-style: italic;
 }
 
 .btn-clear {
@@ -55,10 +60,6 @@ body {
   padding: 15px 0;
   color: rgb(138, 133, 133);
   font-size: 1rem;
-}
-
-.btn-add-task {
-  border: none;
 }
 
 button {
@@ -94,7 +95,12 @@ button {
   gap: 15px;
 }
 
-.edit,
 .del {
   cursor: pointer;
+}
+
+.completed-tasks {
+  text-decoration: line-through;
+  opacity: 0.8;
+  font-style: italic;
 }

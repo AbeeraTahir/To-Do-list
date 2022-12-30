@@ -12,7 +12,7 @@ const addTask = (task) => {
   const listItem = `<li>
     <div class="check">
       <input type="checkbox" class="checkbox" id="check-${task.index}" ${task.completed ? 'checked' : ''}>
-      <input type="text" class="task-description" id="task-${task.index}" value="${task.description}">
+      <input type="text" class="task-description ${task.completed ? 'completed-tasks' : ''}" id="task-${task.index}" value="${task.description}">
     </div>
     <div class="actions">
       <i class="fa-solid fa-trash-can del" id="del-${task.index}"></i>
@@ -21,10 +21,14 @@ const addTask = (task) => {
   listItems.insertAdjacentHTML('beforeend', listItem);
 };
 
-// displaying tasks on window loading
-window.addEventListener('DOMContentLoaded', () => {
+const renderTasks = () => {
   const tasks = getLocalStorage();
   tasks.map((task) => addTask(task));
+};
+
+// displaying tasks on window loading
+window.addEventListener('DOMContentLoaded', () => {
+  renderTasks();
 });
 
 // deleting task
@@ -35,8 +39,8 @@ const deleteTask = (element) => {
     item.index = index + 1;
   });
   setLocalStorage(filteredTasks);
-  element.parentElement.parentElement.remove();
-  window.location.reload();
+  listItems.innerHTML = '';
+  renderTasks();
 };
 
 // editing task
@@ -61,8 +65,7 @@ listItems.addEventListener('click', (e) => {
     deleteTask(e.target);
   }
   if (e.target.classList.contains('checkbox')) {
-    const tasks = getLocalStorage();
-    updateTaskStatus(e.target, tasks);
+    updateTaskStatus(e.target);
   }
 });
 
@@ -79,7 +82,8 @@ btnClear.addEventListener('click', () => {
     item.index = ind + 1;
   });
   setLocalStorage(filterTasks);
-  window.location.reload();
+  listItems.innerHTML = '';
+  renderTasks();
 });
 
 inputTask.addEventListener('keypress', (e) => {

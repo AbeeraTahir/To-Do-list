@@ -1,12 +1,17 @@
-const updateTaskStatus = (el, tasks) => {
+import { setLocalStorage, getLocalStorage } from './local_storage.js';
+
+const updateTaskStatus = (el) => {
   el.addEventListener('change', (e) => {
-    const taskIndex = tasks.findIndex((todo) => todo.index === parseInt(e.target.id.replace('check-', ''), 10));
+    const tasks = getLocalStorage();
+    const task = tasks.find((todo) => todo.index === parseInt(e.target.id.replace('check-', ''), 10));
     if (e.target.checked) {
-      tasks[taskIndex].completed = true;
+      task.completed = true;
+      e.target.nextElementSibling.classList.add('completed-tasks');
     } else {
-      tasks[taskIndex].completed = false;
+      task.completed = false;
+      e.target.nextElementSibling.classList.remove('completed-tasks');
     }
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    setLocalStorage(tasks);
   });
 };
 
