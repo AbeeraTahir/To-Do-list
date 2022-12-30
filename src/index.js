@@ -9,7 +9,7 @@ const btnClear = document.querySelector('.btn-clear');
 
 // function for display added task to list
 const addTask = (task) => {
-  const listItem = `<li>
+  const listItem = `<li class="border-bottom">
     <div class="check">
       <input type="checkbox" class="checkbox" id="check-${task.index}" ${task.completed ? 'checked' : ''}>
       <input type="text" class="task-description ${task.completed ? 'completed-tasks' : ''}" id="task-${task.index}" value="${task.description}">

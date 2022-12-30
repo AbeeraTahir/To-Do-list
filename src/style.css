@@ -20,6 +20,10 @@ body {
   background-color: var(--main-color);
 }
 
+.border-bottom {
+  border-bottom: 1px solid var(--border-color);
+}
+
 .to-do-box {
   width: 40%;
   position: fixed;
@@ -39,7 +43,6 @@ body {
   align-items: center;
   color: var(--heading-color);
   font-size: 2.5rem;
-  border-bottom: 1px solid var(--border-color);
 }
 
 .add-to-list {
@@ -48,7 +51,6 @@ body {
   justify-content: space-between;
   align-items: center;
   color: var(--font-color);
-  border-bottom: 1px solid var(--border-color);
 }
 
 .add-to-list input {
@@ -67,7 +69,7 @@ body {
 .btn-clear {
   display: block;
   margin-top: auto;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   padding: 15px 0;
   color: var(--font-color);
   font-size: 1.1rem;
@@ -89,7 +91,6 @@ button {
 
 .to-do-list li {
   padding: 15px;
-  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
