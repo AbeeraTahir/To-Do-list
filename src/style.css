@@ -1,14 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Crete+Round&family=Poppins&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --main-color: #3f72af;
+  --card-color: #f9f7f7;
+  --heading-color: #112d43;
+  --btn-color: #dbe2ef;
+  --font-color: #7b7b7b;
+  --border-color: #ccc;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: rgb(250, 244, 244);
+  background-color: var(--main-color);
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--border-color);
 }
 
 .to-do-box {
@@ -17,48 +30,55 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border-radius: 20px;
+  background-color: var(--card-color);
   display: flex;
   flex-direction: column;
 }
 
 .todays-to-do {
   padding: 15px;
-  border-bottom: 1px solid #ccc;
-  font-weight: bold;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  color: var(--heading-color);
+  font-size: 2.5rem;
 }
 
 .add-to-list {
   padding: 15px;
-  border-bottom: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: var(--font-color);
 }
 
 .add-to-list input {
   font-style: italic;
   width: 80%;
-  border: none;
   outline: none;
   font-size: 0.95rem;
+  border: none;
+  background-color: transparent;
+}
+
+.add-to-list span {
+  font-style: italic;
 }
 
 .btn-clear {
   display: block;
   margin-top: auto;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   padding: 15px 0;
-  color: rgb(138, 133, 133);
-  font-size: 1rem;
+  color: var(--font-color);
+  font-size: 1.1rem;
+  border-radius: 0 0 20px 20px;
 }
 
-.btn-add-task {
-  border: none;
+.btn-clear:hover {
+  background-color: var(--btn-color);
+  transition: 0.4s ease-in-out;
 }
 
 button {
@@ -71,7 +91,6 @@ button {
 
 .to-do-list li {
   padding: 15px;
-  border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -80,7 +99,14 @@ button {
 .task-description {
   border: none;
   outline: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  background: transparent;
+  color: var(--font-color);
+}
+
+.task-description:focus {
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
 }
 
 .check,
@@ -90,7 +116,12 @@ button {
   gap: 15px;
 }
 
-.edit,
 .del {
   cursor: pointer;
+}
+
+.completed-tasks {
+  text-decoration: line-through;
+  opacity: 0.8;
+  font-style: italic;
 }
