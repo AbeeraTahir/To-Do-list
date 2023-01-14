@@ -1,5 +1,5 @@
 # To-Do-list
-To-Do-list is a website that helps user to organize and manage their routine tasks. User can add a task to the list, remove a task, and clear all completed tasks.
+To-Do-list is a website that helps the users to organize and manage their routine tasks. User can add a task to the list, remove a task, and clear all completed tasks.
 ## Built With
 
 - HTML
