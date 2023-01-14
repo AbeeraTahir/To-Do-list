@@ -8,7 +8,7 @@ const listItems = document.getElementById('to-do-list');
 const btnClear = document.querySelector('.btn-clear');
 
 // function for display added task to list
-const addTask = (task) => {
+const addTaskToUI = (task) => {
   const listItem = `<li class="border-bottom">
     <div class="check">
       <input type="checkbox" class="checkbox" id="check-${task.index}" ${task.completed ? 'checked' : ''}>
@@ -23,7 +23,7 @@ const addTask = (task) => {
 
 const renderTasks = () => {
   const tasks = getLocalStorage();
-  tasks.map((task) => addTask(task));
+  tasks.map((task) => addTaskToUI(task));
 };
 
 // displaying tasks on window loading
@@ -31,14 +31,8 @@ window.addEventListener('DOMContentLoaded', () => {
   renderTasks();
 });
 
-// deleting task
-const deleteTask = (element) => {
-  const tasks = getLocalStorage();
-  const filteredTasks = tasks.filter((todo) => todo.index !== parseInt(element.id.replace('del-', ''), 10));
-  filteredTasks.forEach((item, index) => {
-    item.index = index + 1;
-  });
-  setLocalStorage(filteredTasks);
+// updating UI on deletion
+const updateUI = () => {
   listItems.innerHTML = '';
   renderTasks();
 };
@@ -57,6 +51,17 @@ const editTask = () => {
       }
     });
   });
+};
+
+// deleting task
+const deleteTask = (element) => {
+  const tasks = getLocalStorage();
+  const filteredTasks = tasks.filter((todo) => todo.index !== parseInt(element.id.replace('del-', ''), 10));
+  filteredTasks.forEach((item, index) => {
+    item.index = index + 1;
+  });
+  setLocalStorage(filteredTasks);
+  updateUI();
 };
 
 // Element target for task deletion and status updation
@@ -82,10 +87,10 @@ btnClear.addEventListener('click', () => {
     item.index = ind + 1;
   });
   setLocalStorage(filterTasks);
-  listItems.innerHTML = '';
-  renderTasks();
+  updateUI();
 });
 
+// Adding task
 inputTask.addEventListener('keypress', (e) => {
   e.preventDefault();
   const tasks = getLocalStorage();
@@ -96,7 +101,7 @@ inputTask.addEventListener('keypress', (e) => {
       completed: false,
     });
     setLocalStorage(tasks);
-    addTask(tasks[tasks.length - 1]);
+    addTaskToUI(tasks[tasks.length - 1]);
     inputTask.value = '';
   }
 });
