@@ -31,12 +31,6 @@ window.addEventListener('DOMContentLoaded', () => {
   renderTasks();
 });
 
-// updating UI on deletion
-const updateUI = () => {
-  listItems.innerHTML = '';
-  renderTasks();
-};
-
 // editing task
 // task will be edited when first the input field of task is updated and then press enter key.
 const editTask = () => {
@@ -53,13 +47,24 @@ const editTask = () => {
   });
 };
 
+// updating UI on deletion
+const updateUI = () => {
+  listItems.innerHTML = '';
+  renderTasks();
+};
+
+// updating task indexes after deletion
+const updateIndex = (filteredTasks) => {
+  filteredTasks.forEach((item, index) => {
+    item.index = index + 1;
+  });
+};
+
 // deleting task
 const deleteTask = (element) => {
   const tasks = getLocalStorage();
   const filteredTasks = tasks.filter((todo) => todo.index !== parseInt(element.id.replace('del-', ''), 10));
-  filteredTasks.forEach((item, index) => {
-    item.index = index + 1;
-  });
+  updateIndex(filteredTasks);
   setLocalStorage(filteredTasks);
   updateUI();
 };
@@ -83,9 +88,7 @@ listItems.addEventListener('DOMSubtreeModified', () => {
 btnClear.addEventListener('click', () => {
   const tasks = getLocalStorage();
   const filterTasks = tasks.filter((task) => task.completed === false);
-  filterTasks.forEach((item, ind) => {
-    item.index = ind + 1;
-  });
+  updateIndex(filterTasks);
   setLocalStorage(filterTasks);
   updateUI();
 });

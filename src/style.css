@@ -5,7 +5,7 @@
   --card-color: #f9f7f7;
   --heading-color: #112d43;
   --btn-color: #dbe2ef;
-  --font-color: #7b7b7b;
+  --font-color: #272a31;
   --border-color: #ccc;
 }
 
@@ -94,6 +94,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: all 0.5s ease;
 }
 
 .task-description {
