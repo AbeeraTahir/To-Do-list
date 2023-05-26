@@ -126,3 +126,7 @@ button {
   opacity: 0.8;
   font-style: italic;
 }
+
+.span-task {
+  margin: 15px;
+}

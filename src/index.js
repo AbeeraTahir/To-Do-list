@@ -7,23 +7,23 @@ const inputTask = document.getElementById('task');
 const listItems = document.getElementById('to-do-list');
 const btnClear = document.querySelector('.btn-clear');
 
-// function for display added task to list
-const addTaskToUI = (task) => {
-  const listItem = `<li class="border-bottom">
-    <div class="check">
-      <input type="checkbox" class="checkbox" id="check-${task.index}" ${task.completed ? 'checked' : ''}>
-      <input type="text" class="task-description ${task.completed ? 'completed-tasks' : ''}" id="task-${task.index}" value="${task.description}">
-    </div>
-    <div class="actions">
-      <i class="fa-solid fa-trash-can del" id="del-${task.index}"></i>
-    </div>
-  </li>`;
-  listItems.insertAdjacentHTML('beforeend', listItem);
-};
-
 const renderTasks = () => {
   const tasks = getLocalStorage();
-  tasks.map((task) => addTaskToUI(task));
+  let listItem = '';
+  if (tasks) {
+    tasks.forEach((task) => {
+      listItem += `<li class="border-bottom">
+      <div class="check">
+        <input type="checkbox" class="checkbox" id="check-${task.index}" ${task.completed ? 'checked' : ''}>
+        <input type="text" class="task-description ${task.completed ? 'completed-tasks' : ''}" id="task-${task.index}" value="${task.description}">
+      </div>
+      <div class="actions">
+        <i class="fa-solid fa-trash-can del" id="del-${task.index}"></i>
+      </div>
+    </li>`;
+    });
+  }
+  listItems.innerHTML = listItem || '<div class="span-task"><p>You don\'t have any task here</p></div>';
 };
 
 // displaying tasks on window loading
@@ -47,12 +47,6 @@ const editTask = () => {
   });
 };
 
-// updating UI on deletion
-const updateUI = () => {
-  listItems.innerHTML = '';
-  renderTasks();
-};
-
 // updating task indexes after deletion
 const updateIndex = (filteredTasks) => {
   filteredTasks.forEach((item, index) => {
@@ -66,7 +60,7 @@ const deleteTask = (element) => {
   const filteredTasks = tasks.filter((todo) => todo.index !== parseInt(element.id.replace('del-', ''), 10));
   updateIndex(filteredTasks);
   setLocalStorage(filteredTasks);
-  updateUI();
+  renderTasks();
 };
 
 // Element target for task deletion and status updation
@@ -90,12 +84,11 @@ btnClear.addEventListener('click', () => {
   const filterTasks = tasks.filter((task) => task.completed === false);
   updateIndex(filterTasks);
   setLocalStorage(filterTasks);
-  updateUI();
+  renderTasks();
 });
 
 // Adding task
 inputTask.addEventListener('keypress', (e) => {
-  e.preventDefault();
   const tasks = getLocalStorage();
   if (e.key === 'Enter' && inputTask.value.trim() !== '') {
     tasks.push({
@@ -104,7 +97,7 @@ inputTask.addEventListener('keypress', (e) => {
       completed: false,
     });
     setLocalStorage(tasks);
-    addTaskToUI(tasks[tasks.length - 1]);
+    renderTasks();
     inputTask.value = '';
   }
 });
