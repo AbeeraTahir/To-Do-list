@@ -26,6 +26,7 @@ body {
 
 .to-do-box {
   width: 40%;
+  max-height: 70%;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -37,12 +38,13 @@ body {
 }
 
 .todays-to-do {
-  padding: 15px;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--heading-color);
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 .add-to-list {
@@ -87,6 +89,7 @@ button {
 
 .to-do-list {
   list-style-type: none;
+  overflow: auto;
 }
 
 .to-do-list li {
@@ -94,7 +97,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all 0.5s ease;
 }
 
 .task-description {
@@ -125,4 +127,14 @@ button {
   text-decoration: line-through;
   opacity: 0.8;
   font-style: italic;
+}
+
+.span-task {
+  margin: 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .to-do-box {
+    width: 80%;
+  }
 }
