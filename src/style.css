@@ -134,7 +134,8 @@ button {
 }
 
 @media screen and (max-width: 767px) {
-  .to-do-box {
+  .to-do-box,
+  .task-description {
     width: 80%;
   }
 }
