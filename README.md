@@ -7,7 +7,7 @@ To-Do-list is a website, created with JavaScript, that helps the users to organi
 - JavaScript
 
 ## Live Demo
-> [Click here for live preview](https://tubular-medovik-109253.netlify.app)
+> [Click here for live preview](https://abeeratahir.github.io/To-Do-list/dist/)
 
 ## Getting Started
 
